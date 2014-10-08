@@ -1,0 +1,13 @@
+/node_modules/
+.DS_Store
+*.log
+*.html
+/dist/
+/config.json
+/static/js/global.js
+/static/css/global.css
+!/src
+/src/js/
+/src/css/*.css
+!/src/css/*.min.css
+/docs/

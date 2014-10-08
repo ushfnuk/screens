@@ -1,0 +1,41 @@
+#!/usr/bin/env coffee
+
+program = require 'commander'
+fs      = require 'fs'
+colors  = require 'colors'
+_       = require 'underscore'
+
+
+program
+    .version '0.0.1'
+    .option '-a, --api [path]', 'Set path to API server', 'http://localhost:3000'
+    .option '-c, --config [path]', 'Set path to config file', 'config.json'
+    .option '-p, --port [number]', 'Set local server port number to config file', '4000'
+    .option '-d, --docco [number]', 'Set docco server port number to config file', '4001'
+    .option '-b, --build-port [number]', 'Set build port number to config file', '4002'
+    .parse process.argv
+
+
+saveConfig = (json)->
+    try
+        fs.writeFileSync 'config.json', JSON.stringify json
+        console.log "config.json saved!\n".green
+    catch
+        console.log "Failed to save config.json!\n".red
+        return 1
+
+
+if fs.existsSync program.config
+    data = fs.readFileSync program.config
+    try
+        json = JSON.parse data
+    catch e
+
+
+json ? json      = {}
+json.API_URL     = program.api
+json.SERVER_PORT = program.port
+json.DOCCO_PORT  = program.docco
+json.BUILD_PORT  = program.buildPort
+
+saveConfig json
