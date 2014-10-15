@@ -4,10 +4,7 @@ app     = express()
 
 module.exports = (grunt)->
     grunt.registerMultiTask 'server', ->
-        config = grunt.util._.extend
-            port: 3000
-            root: './'
-        , @data
+        config = @data
 
         done = @async()
 

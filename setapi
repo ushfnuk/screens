@@ -8,20 +8,29 @@ _       = require 'underscore'
 
 program
     .version '0.0.1'
-    .option '-a, --api [path]', 'Set path to API server', 'http://localhost:3000'
-    .option '-c, --config [path]', 'Set path to config file', 'config.json'
-    .option '-p, --port [number]', 'Set local server port number to config file', '4000'
-    .option '-d, --docco [number]', 'Set docco server port number to config file', '4001'
-    .option '-b, --build-port [number]', 'Set build port number to config file', '4002'
+    .option '-a, --api [path]', 'Set path to API server'
+    .option '-c, --config [path]', 'Set path to config file'
+    .option '-p, --port [number]', 'Set local server port number to config file'
+    .option '-d, --docco [number]', 'Set docco server port number to config file'
+    .option '-b, --build-port [number]', 'Set build port number to config file'
     .parse process.argv
+
+
+defaultJSON =
+    API_URL: 'http://localhost:3000'
+    SERVER_PORT: 4000
+    DOCCO_PORT: 4001
+    BUILD_PORT: 4002
+    CONFIG_FILE: 'config.json'
 
 
 saveConfig = (json)->
     try
-        fs.writeFileSync 'config.json', JSON.stringify json
-        console.log "config.json saved!\n".green
+        fs.writeFileSync json.CONFIG_FILE, JSON.stringify json
+        console.log "#{JSON.stringify json, null, 4}"
+        console.log "#{json.CONFIG_FILE} saved!\n".green
     catch
-        console.log "Failed to save config.json!\n".red
+        console.log "Failed to save #{json.CONFIG_FILE}!\n".red
         return 1
 
 
@@ -33,9 +42,12 @@ if fs.existsSync program.config
 
 
 json ? json      = {}
-json.API_URL     = program.api
-json.SERVER_PORT = program.port
-json.DOCCO_PORT  = program.docco
-json.BUILD_PORT  = program.buildPort
+json.API_URL     = program.api       if program.api?
+json.SERVER_PORT = program.port      if program.port?
+json.DOCCO_PORT  = program.docco     if program.docco?
+json.BUILD_PORT  = program.buildPort if program.buildPort?
+json.CONFIG_FILE = program.config    if program.config?
+
+json = _.extend defaultJSON, json
 
 saveConfig json

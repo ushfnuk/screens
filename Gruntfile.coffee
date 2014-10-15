@@ -42,7 +42,7 @@ module.exports = (grunt)->
         clean:
             js: ['./static/js/global.js', './src/js/**/*.js']
             less: ['src/css/**/*.css', '!src/css/*.min.css', './static/css/global.css']
-            jade: './*.html'
+            jade: ['./*.html', './parts/*.html']
             docco: './docs/*'
             build: './dist/*'
 
@@ -62,7 +62,7 @@ module.exports = (grunt)->
 
         copy:
             app:
-                src: ['./index.html', './static/**']
+                src: ['./index.html', './static/**', './parts/**']
                 dest: './dist/'
 
 
