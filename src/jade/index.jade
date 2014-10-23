@@ -22,11 +22,16 @@ html
                     p
                         a.btn.btn-primary.btn-lg(href="https://github.com/ushfnuk/screens" target="_blank" role="button") Смотреть на github-е
 
-            .row
+            .row.jsListWrapper
                 .col-md-6.well
                     #sortable1.list-group.jsList
                         a.list-group-item.jsListItem
-                            h4.list-group-item-heading Sortable1 item 1
+                            h4.list-group-item-heading
+                                | Sortable1 item 1
+                                button.close.jsListItemClose(type="button")
+                                    span(aria-hidden="true")&times;
+                                    span.sr-only Close
+
                             p.list-group-item-text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro sint facilis dolorum, optio assumenda distinctio tempore fugiat consequuntur reiciendis officia. Quibusdam reprehenderit temporibus fuga similique, aut laboriosam, culpa voluptas labore.
 
                         a.list-group-item.jsListItem
